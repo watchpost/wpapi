@@ -11,7 +11,7 @@ mongoose.connect('mongodb://wpdba:lim1t<$Plz@ds045097.mongolab.com:45097/wpostdb
 
 var port = process.env.PORT || 3000;
 var router = express.Router();
-var itemRoute = router.route('/item');
+var itemRoute = router.route('/item/:itemid');
 var itemsRoute = router.route('/items');
 
 router.get('/', function(req, res){
@@ -19,7 +19,7 @@ router.get('/', function(req, res){
 	res.send('Here we go!');
 });
 
-itemRoute.post(function(req, res){
+itemsRoute.post(function(req, res){
 	var item = new Item();
 
 	item.title = req.body.title;
@@ -38,13 +38,46 @@ itemRoute.post(function(req, res){
 		}
 	});
 });
-
 itemsRoute.get(function(req, res){
 	Item.find(function(err, items){
 		if(err){
 			res.send(err);
 		}else{
 			res.json(items);
+		}
+	});
+});
+itemRoute.get(function(req, res){
+	Item.findById(req.params.itemid, function(err, item){
+		if(err){
+			res.send(err);
+		}else{
+			res.json(item);
+		}
+	});
+});
+itemRoute.put(function(req, res){
+	Item.findById(req.params.itemid, function(err, item){
+		if(err){
+			res.send(err);
+		}else{
+			item.price = req.body.price;
+			item.save(function(err){
+				if(err){
+					res.send(err);
+				}else{
+					res.json(item);
+				}
+			});
+		}
+	});
+});
+itemRoute.delete(function(req, res){
+	Item.findByIdAndRemove(req.params.itemid, function(err){
+		if(err){
+			res.send(err);
+		}else{
+			res.json({ message: 'Item deleted'});
 		}
 	});
 });
