@@ -1,0 +1,7 @@
+{
+	"name": "WatchpostAPI",
+	"main": "server.js",
+	"dependencies":{
+		"express": "*"
+	}
+}
