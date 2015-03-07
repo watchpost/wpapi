@@ -8,7 +8,7 @@ app.use(cors());
 app.use(bodyParser.urlencoded({ extended: true }));
 
 var mongoose = require('mongoose');
-mongoose.connect('mongodb://wpdba:lim1t<$Plz@ds045097.mongolab.com:45097/wpostdb');
+mongoose.connect('mongodb://wpdba:password@ds045097.mongolab.com:45097/wpostdb');
 
 var port = process.env.PORT || 3000;
 var router = express.Router();
